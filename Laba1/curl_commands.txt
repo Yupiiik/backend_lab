@@ -1,0 +1,8 @@
+# Команды для тестирования (сервер запущен: npm run dev, порт 3000)
+
+curl -i http://localhost:3000/
+curl -i http://localhost:3000/api/movies
+curl -i http://localhost:3000/api/cinemas
+curl -i http://localhost:3000/api/movies/5
+curl -i http://localhost:3000/api/movies/inception
+curl -i http://localhost:3000/anything-else
