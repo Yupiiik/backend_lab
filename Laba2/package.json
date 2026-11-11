@@ -1,0 +1,22 @@
+{
+  "name": "lab2",
+  "version": "1.0.0",
+  "description": "Лабораторная работа №2. HTTP-методы: CRUD API (Express)",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "practice": "node practice-app.js",
+    "practice:dev": "nodemon practice-app.js"
+  },
+  "keywords": [],
+  "author": "Кулябцев Б.М.",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

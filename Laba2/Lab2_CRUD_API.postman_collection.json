@@ -1,0 +1,1702 @@
+{
+  "info": {
+    "name": "Lab2 CRUD API",
+    "description": "ЛР №2. CRUD API по фильмам (вариант 5, продвинутый уровень). Перед запуском: npm start (порт 3000) и npm run practice (порт 3001). Выбрать окружение Local Development.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Practice (items, порт 3001)",
+      "item": [
+        {
+          "name": "GET All Items",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{practice_url}}/items",
+              "host": [
+                "{{practice_url}}"
+              ],
+              "path": [
+                "items"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Ответ в формате JSON\", function () {",
+                  "  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+                  "});",
+                  "",
+                  "pm.test(\"Есть поле count\", function () {",
+                  "  pm.expect(pm.response.json()).to.have.property(\"count\");",
+                  "});",
+                  "",
+                  "pm.test(\"items - это массив\", function () {",
+                  "  pm.expect(pm.response.json().items).to.be.an(\"array\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Item by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{practice_url}}/items/1",
+              "host": [
+                "{{practice_url}}"
+              ],
+              "path": [
+                "items",
+                "1"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"id = 1\", function () {",
+                  "  pm.expect(pm.response.json().id).to.eql(1);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST Create Item",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{practice_url}}/items",
+              "host": [
+                "{{practice_url}}"
+              ],
+              "path": [
+                "items"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Новый товар из Postman\",\n  \"price\": 500,\n  \"quantity\": 7\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 201\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"Ответ содержит числовой ID\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData).to.have.property(\"id\");",
+                  "  pm.expect(jsonData.id).to.be.a(\"number\");",
+                  "  pm.collectionVariables.set(\"practice_new_id\", jsonData.id);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT Update Item",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{practice_url}}/items/1",
+              "host": [
+                "{{practice_url}}"
+              ],
+              "path": [
+                "items",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Обновлённый товар\",\n  \"price\": 150,\n  \"quantity\": 20\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Данные обновлены\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.name).to.eql(\"Обновлённый товар\");",
+                  "  pm.expect(jsonData.price).to.eql(150);",
+                  "  pm.expect(jsonData.quantity).to.eql(20);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "DELETE Delete Item",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{practice_url}}/items/{{practice_new_id}}",
+              "host": [
+                "{{practice_url}}"
+              ],
+              "path": [
+                "items",
+                "{{practice_new_id}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Есть сообщение и удалённый элемент\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData).to.have.property(\"message\");",
+                  "  pm.expect(jsonData).to.have.property(\"deleted\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Nonexistent Item (404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{practice_url}}/items/999",
+              "host": [
+                "{{practice_url}}"
+              ],
+              "path": [
+                "items",
+                "999"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 404\", function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "pm.test(\"Ответ содержит error\", function () {",
+                  "  pm.expect(pm.response.json()).to.have.property(\"error\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "description": "Практический пример из методички (товары). Запускать сервер: npm run practice"
+    },
+    {
+      "name": "Setup (сброс данных)",
+      "item": [
+        {
+          "name": "DELETE All Movies (reset)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST Seed Movies",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movies/bulk",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies",
+                "bulk"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"title\": \"Начало\",\n    \"year\": 2010,\n    \"director\": \"Кристофер Нолан\",\n    \"rating\": 8.8\n  },\n  {\n    \"title\": \"Тёмный рыцарь\",\n    \"year\": 2008,\n    \"director\": \"Кристофер Нолан\",\n    \"rating\": 9.0\n  },\n  {\n    \"title\": \"Интерстеллар\",\n    \"year\": 2014,\n    \"director\": \"Кристофер Нолан\",\n    \"rating\": 8.6\n  },\n  {\n    \"title\": \"Криминальное чтиво\",\n    \"year\": 1994,\n    \"director\": \"Квентин Тарантино\",\n    \"rating\": 8.9\n  },\n  {\n    \"title\": \"Побег из Шоушенка\",\n    \"year\": 1994,\n    \"director\": \"Фрэнк Дарабонт\",\n    \"rating\": 9.3\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 201\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"Создано 5 фильмов с id 1..5\", function () {",
+                  "  const movies = pm.response.json().movies;",
+                  "  pm.expect(movies).to.have.lengthOf(5);",
+                  "  pm.expect(movies[0].id).to.eql(1);",
+                  "  pm.expect(movies[4].id).to.eql(5);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "description": "Возвращает сервер фильмов в исходное состояние, чтобы коллекцию можно было запускать повторно"
+    },
+    {
+      "name": "Movies (вариант 5)",
+      "item": [
+        {
+          "name": "GET All Movies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Ответ в формате JSON\", function () {",
+                  "  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+                  "});",
+                  "",
+                  "pm.test(\"count = 5, movies - массив\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.count).to.eql(5);",
+                  "  pm.expect(jsonData.movies).to.be.an(\"array\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Movie by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies",
+                "1"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Есть все поля фильма\", function () {",
+                  "  const m = pm.response.json();",
+                  "  pm.expect(m.id).to.eql(1);",
+                  "  pm.expect(m).to.have.property(\"title\");",
+                  "  pm.expect(m).to.have.property(\"year\");",
+                  "  pm.expect(m).to.have.property(\"director\");",
+                  "  pm.expect(m).to.have.property(\"rating\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Search by title",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies?search=нач",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "нач"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Найден один фильм «Начало»\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.count).to.eql(1);",
+                  "  pm.expect(jsonData.movies[0].title).to.eql(\"Начало\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Sort by rating desc",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies?sort=rating&order=desc",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies"
+              ],
+              "query": [
+                {
+                  "key": "sort",
+                  "value": "rating"
+                },
+                {
+                  "key": "order",
+                  "value": "desc"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Первый фильм имеет наибольший рейтинг (9.3)\", function () {",
+                  "  const list = pm.response.json().movies;",
+                  "  pm.expect(list[0].rating).to.eql(9.3);",
+                  "  pm.expect(list[0].rating).to.be.above(list[list.length - 1].rating);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Pagination",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies?page=2&limit=2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2"
+                },
+                {
+                  "key": "limit",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Страница 2, 2 элемента, всего 5\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.page).to.eql(2);",
+                  "  pm.expect(jsonData.limit).to.eql(2);",
+                  "  pm.expect(jsonData.movies).to.have.lengthOf(2);",
+                  "  pm.expect(jsonData.count).to.eql(5);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies/stats",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies",
+                "stats"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Количество и средний рейтинг\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.count).to.eql(5);",
+                  "  pm.expect(jsonData.avg_rating).to.eql(8.92);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Related (same director)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies/1/related",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies",
+                "1",
+                "related"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Два других фильма Нолана\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.director).to.eql(\"Кристофер Нолан\");",
+                  "  pm.expect(jsonData.related_movies).to.have.lengthOf(2);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST Create Movie",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movies",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Матрица\",\n  \"year\": 1999,\n  \"director\": \"Вачовски\",\n  \"rating\": 8.7\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 201\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"Фильм создан, id = 6\", function () {",
+                  "  const m = pm.response.json();",
+                  "  pm.expect(m.id).to.eql(6);",
+                  "  pm.expect(m.title).to.eql(\"Матрица\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST Bulk Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movies/bulk",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies",
+                "bulk"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"title\": \"Престиж\",\n    \"year\": 2006,\n    \"director\": \"Кристофер Нолан\",\n    \"rating\": 8.5\n  },\n  {\n    \"title\": \"Джанго освобождённый\",\n    \"year\": 2012,\n    \"director\": \"Квентин Тарантино\",\n    \"rating\": 8.4\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 201\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"Создано 2 фильма\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.movies).to.have.lengthOf(2);",
+                  "  pm.expect(jsonData.movies[0].id).to.eql(7);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT Update Movie",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movies/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Начало (2010)\",\n  \"year\": 2010,\n  \"director\": \"Кристофер Нолан\",\n  \"rating\": 8.9\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Фильм полностью заменён\", function () {",
+                  "  const m = pm.response.json();",
+                  "  pm.expect(m.id).to.eql(1);",
+                  "  pm.expect(m.title).to.eql(\"Начало (2010)\");",
+                  "  pm.expect(m.rating).to.eql(8.9);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PATCH Update Rating",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movies/2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies",
+                "2"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 9.5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Изменён только rating\", function () {",
+                  "  const m = pm.response.json();",
+                  "  pm.expect(m.rating).to.eql(9.5);",
+                  "  pm.expect(m.title).to.eql(\"Тёмный рыцарь\");",
+                  "  pm.expect(m.year).to.eql(2008);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "DELETE Delete Movie",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies/6",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies",
+                "6"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 204\", function () {",
+                  "  pm.response.to.have.status(204);",
+                  "});",
+                  "",
+                  "pm.test(\"Тело ответа пустое\", function () {",
+                  "  pm.expect(pm.response.text()).to.eql(\"\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Errors",
+      "item": [
+        {
+          "name": "GET Nonexistent Movie (404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies/999",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies",
+                "999"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 404\", function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "pm.test(\"Ответ содержит описание ошибки\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.error !== undefined || jsonData.errors !== undefined).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Invalid ID (400)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies/abc",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies",
+                "abc"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 400\", function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Ответ содержит описание ошибки\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.error !== undefined || jsonData.errors !== undefined).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Unknown Route (404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/unknown",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "unknown"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 404\", function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "pm.test(\"Ответ содержит описание ошибки\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.error !== undefined || jsonData.errors !== undefined).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST Empty Body (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movies",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 400\", function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Ответ содержит описание ошибки\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.error !== undefined || jsonData.errors !== undefined).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST Invalid Types (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movies",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Тест\",\n  \"year\": \"две тысячи\",\n  \"director\": \"Режиссёр\",\n  \"rating\": \"высокий\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 400\", function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Ответ содержит описание ошибки\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.error !== undefined || jsonData.errors !== undefined).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST Rating Out Of Range (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movies",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Тест\",\n  \"year\": 2020,\n  \"director\": \"Режиссёр\",\n  \"rating\": 11\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 400\", function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Ответ содержит описание ошибки\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.error !== undefined || jsonData.errors !== undefined).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST Malformed JSON (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movies",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\": \"Тест\", ",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 400\", function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Ответ содержит описание ошибки\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.error !== undefined || jsonData.errors !== undefined).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST Bulk Invalid Item (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movies/bulk",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies",
+                "bulk"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"title\": \"Нормальный\",\n    \"year\": 2020,\n    \"director\": \"Режиссёр\",\n    \"rating\": 7\n  },\n  {\n    \"title\": \"\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 400\", function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Ответ содержит описание ошибки\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.error !== undefined || jsonData.errors !== undefined).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT Nonexistent Movie (404)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movies/999",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies",
+                "999"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Тест\",\n  \"year\": 2020,\n  \"director\": \"Режиссёр\",\n  \"rating\": 7\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 404\", function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "pm.test(\"Ответ содержит описание ошибки\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.error !== undefined || jsonData.errors !== undefined).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT Incomplete Body (400)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movies/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Только название\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 400\", function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Ответ содержит описание ошибки\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.error !== undefined || jsonData.errors !== undefined).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PATCH Nonexistent Movie (404)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movies/999",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies",
+                "999"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 404\", function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "pm.test(\"Ответ содержит описание ошибки\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.error !== undefined || jsonData.errors !== undefined).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PATCH Empty Body (400)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movies/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 400\", function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Ответ содержит описание ошибки\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.error !== undefined || jsonData.errors !== undefined).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "DELETE Nonexistent Movie (404)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies/999",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies",
+                "999"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 404\", function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "pm.test(\"Ответ содержит описание ошибки\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.error !== undefined || jsonData.errors !== undefined).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Invalid Pagination (400)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies?page=0&limit=abc",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "limit",
+                  "value": "abc"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 400\", function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Ответ содержит описание ошибки\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.error !== undefined || jsonData.errors !== undefined).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Invalid Sort Field (400)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies?sort=password",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies"
+              ],
+              "query": [
+                {
+                  "key": "sort",
+                  "value": "password"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 400\", function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Ответ содержит описание ошибки\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.error !== undefined || jsonData.errors !== undefined).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Server Error (500)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/error-test",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "error-test"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 500\", function () {",
+                  "  pm.response.to.have.status(500);",
+                  "});",
+                  "",
+                  "pm.test(\"Ответ содержит описание ошибки\", function () {",
+                  "  const jsonData = pm.response.json();",
+                  "  pm.expect(jsonData.error !== undefined || jsonData.errors !== undefined).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "description": "Проверка обработки ошибок: 400, 404, 500"
+    },
+    {
+      "name": "Cleanup (в конце!)",
+      "item": [
+        {
+          "name": "DELETE All Movies",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Все фильмы удалены\", function () {",
+                  "  pm.expect(pm.response.json().deleted).to.be.above(0);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Empty List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "movies"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Статус 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Список пуст\", function () {",
+                  "  pm.expect(pm.response.json().count).to.eql(0);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "practice_new_id",
+      "value": "4"
+    }
+  ]
+}
