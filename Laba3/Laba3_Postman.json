@@ -1,0 +1,663 @@
+{
+  "info": {
+    "name": "Лабораторная работа №3 — Фильмы (вариант 5)",
+    "description": "Коллекция GET-запросов для проверки Flask API лабораторной работы №3. Перед отправкой запросов запустите app.py в VS Code. Базовый адрес: http://127.0.0.1:3000.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "01 — Основные маршруты",
+      "item": [
+        {
+          "name": "Получить список фильмов",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/movies",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Получить фильм с id=1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/movies/1",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Получить фильмы жанра «Фантастика»",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/genres/%D0%A4%D0%B0%D0%BD%D1%82%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%B0/movies",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Получить фильмы режиссёра Кристофера Нолана",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/directors/%D0%9A%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%84%D0%B5%D1%80%20%D0%9D%D0%BE%D0%BB%D0%B0%D0%BD/movies",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "02 — Поиск и фильтрация",
+      "item": [
+        {
+          "name": "Поиск фильма по названию «Матрица»",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/movies?search=%D0%9C%D0%B0%D1%82%D1%80%D0%B8%D1%86%D0%B0",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Фильтр по режиссёру (параметр filter)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/movies?filter=director%3A%D0%9A%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%84%D0%B5%D1%80%20%D0%9D%D0%BE%D0%BB%D0%B0%D0%BD",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Фильтр по рейтингу",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/movies?filter=rating%3A8.5",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Фильтр по режиссёру (параметр director)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/movies?director=%D0%A4%D1%80%D1%8D%D0%BD%D0%BA%20%D0%94%D0%B0%D1%80%D0%B0%D0%B1%D0%BE%D0%BD%D1%82",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "03 — Сортировка и пагинация",
+      "item": [
+        {
+          "name": "Сортировка по рейтингу по убыванию",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/movies?sort=rating&order=desc",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Сортировка по году по возрастанию",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/movies?sort=year&order=asc",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Первая страница, по 3 фильма",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/movies?page=1&limit=3",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Вторая страница, по 3 фильма",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/movies?page=2&limit=3",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "04 — Вложенные ресурсы",
+      "item": [
+        {
+          "name": "Актёры фильма с id=1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/movies/1/actors",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Кинотеатры фильма с id=1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/movies/1/cinemas",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Элемент категории 1, фильм 1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/categories/1/items/1",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Три параметра пути: режиссёр, фильм и кинотеатр",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/directors/%D0%9A%D1%80%D0%B8%D1%81%D1%82%D0%BE%D1%84%D0%B5%D1%80%20%D0%9D%D0%BE%D0%BB%D0%B0%D0%BD/movies/1/cinemas/1",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Многоуровневый ресурс: комментарий",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/users/1/posts/10/comments/100",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "05 — Статистика",
+      "item": [
+        {
+          "name": "Статистика по фильмам",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/movies/stats",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "06 — Проверка ошибок",
+      "item": [
+        {
+          "name": "Некорректный id фильма — ожидается 400",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/movies/abc",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Несуществующий фильм — ожидается 404",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/movies/999",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 404', function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Несуществующий маршрут — ожидается 404",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/unknown",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 404', function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Некорректное значение limit — ожидается 400",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/movies?limit=101",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Недопустимое поле сортировки — ожидается 400",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/movies?sort=password",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Некорректный формат фильтра — ожидается 400",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://127.0.0.1:3000/movies?filter=wrongformat",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Статус ответа: 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test('Ответ содержит JSON', function () {",
+                  "    pm.response.to.be.json;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "response": []
+        }
+      ]
+    }
+  ]
+}
